@@ -1,0 +1,141 @@
+\documentclass[11pt, xcolor=dvipsnames]{beamer}
+\usetheme{Montpellier}
+
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{xcolor}
+\usepackage{pgfpages}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[numbers,square]{natbib}
+\usepackage{beamerthemesplit}
+
+
+% some tikz declarations
+\usepackage { tikz }
+\usetikzlibrary{intersections}
+\usetikzlibrary { arrows.meta , positioning, calc, arrows ,automata, matrix}
+\pgfdeclarelayer{bg}    % declare background layer
+\pgfsetlayers{bg,main}  % set the order of the layers (main is the standard layer)
+
+
+\setbeamertemplate{caption}[numbered]	% numbers for figures
+
+\setbeamercolor{mycolor}{fg=Gray,bg=White}
+
+
+
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+\newcommand{\bigcupdot}{\mathbin{\mathaccent\cdot{\bigcup\nolimits}}}
+
+
+
+
+\author{Aldo [family name]\\ Tobias John\\ Patrick Wienhöft}
+
+\title{The boolean Pythagorean Triples problem}
+
+\subtitle{subtitle}
+
+%\logo{\includegraphics{logo-tu-ilmenau.jpg}}
+
+\institute{TU Dresden}
+
+\date{date of the presentation}
+
+
+
+\setbeamercovered{transparent}
+
+%\setbeamertemplate{navigation symbol}{}
+
+\beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{footline}[frame number]
+\definecolor{ICCLblue}{HTML}{122252}
+\definecolor{ICCLorange}{HTML}{f36b00}
+\definecolor{ICCLyellow}{HTML}{eecb8b}
+\setbeamertemplate{frametitle}
+{
+	\begin{centering}
+		\color{ICCLblue}
+		\insertframetitle
+		\par
+	\end{centering}
+}
+\setbeamercolor{title}{fg=ICCLblue,bg=white!20}
+\setbeamercolor{structure}{fg=ICCLorange}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}
+{%
+	\leavevmode%
+	\hbox{%
+		
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{mycolor}%
+			\insertsection
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{mycolor}%
+			%\usebeamerfont{date in foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{mycolor}%
+			
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+	}%
+	
+	\vskip0pt%
+}
+
+\setbeamertemplate{element name}{arguments}
+
+
+
+%############################################################
+%#  actual content of the presentation						#
+%############################################################
+
+
+
+
+\begin{document}
+	
+	%first page of the presentation
+	
+	\begin{frame}
+	\titlepage
+\end{frame}
+
+
+
+%\section*{Outline}
+%\frame{\frametitle{Outline}\tableofcontents} 
+
+
+\section{name of the section}
+\begin{frame}
+\frametitle{Title of the frame}
+\begin{itemize}
+	\setlength{\itemsep}{+20pt} % set the distance between the items
+	\item \textbf{bold text} 
+	\pause % 
+	\item \textit{italic text}
+	\pause
+	\item normal text
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	some formula:
+	\[ \sum_{i = 0}^{n} = \frac{n \cdot (n+1)}{2} \]
+	
+\end{frame}
+
+
+
+
+
+\end{document}
+
