@@ -1,6 +1,6 @@
-\documentclass[c,8pt,xcolor...,x11names]{beamer}
+\documentclass[c,8pt,xcolor...,x11names,usenames,dvipsnames]{beamer}
 \usepackage{icclslides}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
 \usepackage{amssymb}
 \usepackage{latexsym}
@@ -13,19 +13,34 @@
 % \usepackage{arydshln}
 \usepackage{pdfpages}
 \usepackage{graphicx} 
+\usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning, arrows.meta , positioning, calc, arrows ,automata, matrix}
+\pgfdeclarelayer{bg}    % declare background layer
+\pgfsetlayers{bg,main}  % set the order of the layers (main is the standard layer)
 
 \tikzstyle{ele} = [circle, text centered, minimum width=1em, minimum height=3ex]
+\tikzset{
+	invisible/.style={opacity=0},
+	visible on/.style={alt={#1{}{invisible}}},
+	alt/.code args={<#1>#2#3}{%
+		\alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+	},
+}
+
+
+
+
+
 
 %% Uncomment to activate navigation symbols in the lower right of the pages:
 \setbeamertemplate{navigation symbols}{}
 
-\renewcommand{\Myauthor}{Aldo [family name], Tobias John, Patrick Wienhöft}
+\renewcommand{\Myauthor}{ Tobias John, Aldo Kurmeta, Patrick Wienhöft}
 \renewcommand{\Mytitle}{The boolean Pythagorean Triples problem}
 
 
-\author{Aldo Kurmeta\\ Tobias John\\ Patrick Wienhöft}
+\author{ Tobias John\\ Aldo Kurmeta\\ Patrick Wienhöft}
 
 \title{\Mytitle}
 
@@ -65,6 +80,8 @@
 
 % title frame
 \maketitle
+
+
 
 
 % Aldo's part
@@ -248,13 +265,108 @@
 \section{Cube-and-conquer solving}
 \begin{frame}{Cube-and-conquer solving}
 	\begin{itemize}
-		\item Problem: solving with conflict-driven clause leraning (CDCL) is too slow
+		\item Problem: solving with conflict-driven clause learning (CDCL) is too slow
 		\pause
-		\item Solution: use different heuristics $\Rightarrow$ cube-and-conquer solver (C\&C)
+		\item Solution: 
+		\begin{itemize}
+			\item use different heuristics $\Rightarrow$ cube-and-conquer solver (C\&C)
+			\item use parallelization (800 cores)
+		\end{itemize}
+		% look-ahead heuristics
 	\end{itemize}
 	\pause
 	\begin{figure}
-		\includegraphics[width=0.5\textwidth]{images/scan1.png} 
+		
+		\begin{tikzpicture}
+		% nodes
+		\filldraw
+		(5,0)  node[circle,inner sep=1pt,draw, fill=white](x5) {$x_5$};
+		
+		\filldraw 
+		($(x5) + (-2, -1)$) node[circle,inner sep=1pt,draw, fill=white](x21) {$x_2$};
+		\filldraw
+		($(x5) + (2, -1)$) node[circle,inner sep=1pt,draw, fill=white](x7) {$x_7$};
+		\filldraw
+		($(x21) + (-1, -1)$) node[circle,inner sep=1pt,draw, fill=white](x3) {$x_3$};
+		\filldraw
+		($(x21) + (1, -1)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p3);
+		\filldraw
+		($(x3) + (-0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p1);
+		\filldraw
+		($(x3) + (0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p2);
+		
+		\filldraw
+		($(x7) + (-1, -1)$) node[circle,inner sep=1pt,draw, fill=white](x22) {$x_2$};
+		\filldraw
+		($(x7) + (1, -1)$) node[circle,inner sep=1pt,draw, fill=white](x6) {$x_6$};
+		\filldraw
+		($(x22) + (-0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p4);
+		\filldraw
+		($(x22) + (0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p5);
+		\filldraw
+		($(x6) + (0.75, -0.75)$) node[circle,inner sep=1pt,draw, fill=white](x23) {$x_2$};
+		\filldraw
+		($(x6) + (-0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p6);
+		\filldraw
+		($(x23) + (-0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p7);
+		\filldraw
+		($(x23) + (0.75, -0.75)$) circle (3pt) node[below] {$\bigwedge $} coordinate(p8);
+		
+		
+	
+		% edges
+		\draw[] (x5) -- node[above] {t} (x21);
+		\draw[] (x5) -- node[above] {f} (x7);
+		
+		\draw[] (x21) -- node[above] {t} (x3);
+		\draw[] (x21) -- node[above] {f} (p3);
+		
+		\draw[] (x3) -- node[above] {t} (p1);
+		\draw[] (x3) -- node[above] {f} (p2);
+		
+		\draw[] (x7) -- node[above] {t} (x22);
+		\draw[] (x7) -- node[above] {f} (x6);
+		
+		\draw[] (x22) -- node[above] {t} (p4);
+		\draw[] (x22) -- node[above] {f} (p5);
+		
+		\draw[] (x6) -- node[above] {t} (p6);
+		\draw[] (x6) -- node[above] {f} (x23);
+		
+		\draw[] (x23) -- node[above] {t} (p7);
+		\draw[] (x23) -- node[above] {f} (p8);
+		
+		\begin{pgfonlayer}{bg}
+		\draw [draw=OrangeRed1, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
+			($(x21) + (-2,0)$)
+			(x21) 
+			(x22)
+			(x6)
+			($(x6) +(1.5, 0.25)$)
+		};
+	
+		\draw [draw=mdwblue, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
+			($(p1) + (-0.5, 0)$)
+			(p1)
+			(p2)
+			(p3)
+			(p4)
+			(p5)
+			(p6)
+			(p7)
+			(p8)
+			($(p8) + (0.5, 0)$)
+		};
+		\end{pgfonlayer}
+
+		% captions
+		\node(look-ahead1) at ($(x5) + (-4.5, 0)$){look-ahead}; 
+		\node[text = OrangeRed1, align=center](3000) at ($(look-ahead1) + (-1, -1.2)$){$\approx$ 3000 \\binary clauses};
+		\node(look-ahead2) at ($(look-ahead1) + (0, -2)$){look-ahead};
+		\node[text = mdwblue, align = center](3450) at ($(look-ahead2) + (-1, -0.75)$){3450 unassigned\\ variables};
+		\node(CDCL) at ($(look-ahead2) + (0, -1.5)$){CDCL};
+
+		\end{tikzpicture}
 		%\caption{Binary branching tree}
 	\end{figure}
 \end{frame}
@@ -262,7 +374,7 @@
 \begin{frame}{Runtime}
 	\begin{itemize}
 		%TODO: add runtime of the algorithm
-		\item x time
+		\item  x time
 	\end{itemize}
 	\begin{figure}
 		\includegraphics[width=0.5\textwidth]{images/plot1.png} 
