@@ -183,7 +183,7 @@
 		& \wedge \quad NotEqual(p_9,p_{12},p_{15}) &\\
 		& \wedge \quad NotEqual(p_5,p_{12},p_{13}) &
 	\end{flalign*}
-	Note $p_3$ only occurs in $NotEqual(p_3,p_4,p_5)$
+	Note $p_3$ only occurs in $NotEqual(p_3,p_4,p_5)$ and thus does not affect any other clauses
 	\vspace{5px}
 	\pause
 	\begin{itemize}
@@ -208,7 +208,7 @@
 \begin{frame}{Clause elimination}
 	Notes:
 	\begin{itemize}
-		\item $F'$ has more models than $F$
+		\item $F'$ might have more models than $F$
 		\pause
 		\item choice for variables occurring only once in $F$ is important but not represented in $F'$
 		\pause
@@ -238,6 +238,9 @@
 		\item $\rightarrow$ introduce unit clause for variable occurring in $F'$
 		\item $F'' = F' \wedge p_x$
 	\end{itemize}
+	\vspace{5px}
+	\pause
+	Note that every model for $F''$ is a model for $F'$ and the transformation is satisfiability preserving
 \end{frame}
 
 
