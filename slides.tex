@@ -275,6 +275,7 @@
 		% look-ahead heuristics
 	\end{itemize}
 	\pause
+
 	\begin{figure}
 		
 		\begin{tikzpicture}
@@ -337,57 +338,73 @@
 		\draw[] (x23) -- node[above] {f} (p8);
 		
 		\begin{pgfonlayer}{bg}
-		\draw [draw=OrangeRed1, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
-			($(x21) + (-2,0)$)
-			(x21) 
-			(x22)
-			(x6)
-			($(x6) +(1.5, 0.25)$)
-		};
-	
-		\draw [draw=mdwblue, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
-			($(p1) + (-0.5, 0)$)
-			(p1)
-			(p2)
-			(p3)
-			(p4)
-			(p5)
-			(p6)
-			(p7)
-			(p8)
-			($(p8) + (0.5, 0)$)
-		};
+		
+		\visible<6->{
+			\draw [draw=OrangeRed1, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
+				($(x21) + (-2,0)$)
+				(x21) 
+				(x22)
+				(x6)
+				($(x6) +(1.5, 0.25)$)
+			};
+		}
+		\visible<4->{
+			\draw [draw=mdwblue, line width=2pt] plot [smooth ,tension=0.75]coordinates { 
+				($(p1) + (-0.5, 0)$)
+				(p1)
+				(p2)
+				(p3)
+				(p4)
+				(p5)
+				(p6)
+				(p7)
+				(p8)
+				($(p8) + (0.5, 0)$)
+			};
+		}
 		\end{pgfonlayer}
 
 		% captions
-		\node(look-ahead1) at ($(x5) + (-4.5, 0)$){look-ahead}; 
-		\node[text = OrangeRed1, align=center](3000) at ($(look-ahead1) + (-1, -1.2)$){$\approx$ 3000 \\binary clauses};
-		\node(look-ahead2) at ($(look-ahead1) + (0, -2)$){look-ahead};
-		\node[text = mdwblue, align = center](3450) at ($(look-ahead2) + (-1, -0.75)$){3450 unassigned\\ variables};
-		\node(CDCL) at ($(look-ahead2) + (0, -1.5)$){CDCL};
+		\visible<4-3>{\node(look-ahead1) at ($(x5) + (-4.5, 0)$){look-ahead}; }
+		\visible<6->{\node[text = OrangeRed1, align=center](3000) at ($(look-ahead1) + (-1, -1.2)$){$\approx$ 3000 \\binary clauses};}
+		\visible<5-5>{\node(look-ahead2) at ($(look-ahead1) + (0, -1.5)$){look-ahead};}
+		\visible<4->{\node[text = mdwblue, align = center](3450) at ($(look-ahead2) + (-1, -1.25)$){3450 unassigned\\ variables};}
+		\visible<5-5>{\node(CDCL) at ($(look-ahead2) + (0, -2)$){CDCL};}
 
 		\end{tikzpicture}
 		%\caption{Binary branching tree}
+		
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Runtime}
-	\begin{itemize}
-		%TODO: add runtime of the algorithm
-		\item  x time
-	\end{itemize}
-	\begin{figure}
-		\includegraphics[width=0.5\textwidth]{images/plot1.png} 
-		%\caption{runtime of C\&C and CDCL}
-	\end{figure}
-\end{frame}
+
 
 \section{Validation}
 \begin{frame}{Validation of the program}
 	%TODO: add the validation steps
+	\begin{itemize}
+		\item each step must be validated
+	\end{itemize}
+	\begin{figure}
+		\begin{tikzpicture}
+			\node[draw = black, inner sep=30pt] at (0,0) {Picture of the Framework};
+		\end{tikzpicture}
+	\end{figure}
 \end{frame}
 
-
+\begin{frame}{Runtime}
+\begin{itemize}
+	%TODO: add runtime of the algorithm
+	\item Cubing: 22000 CPU hours
+	\item Solving: 13000 CPU hours
+	\item Validation: 16000 CPU hours 
+\end{itemize}
+\pause
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{images/plot1.png} 
+	%\caption{runtime of C\&C and CDCL}
+\end{figure}
+\end{frame}
 
 
 
