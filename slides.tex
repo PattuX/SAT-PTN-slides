@@ -132,9 +132,9 @@
 	\begin{itemize}
 		\item one variable for each number
 		\pause
-		\item one constraint clause for each Pythagorean triple
-		\pause
 		\item interpretation gives partition
+		\pause
+		\item one constraint clause for each Pythagorean triple
 	\end{itemize}
 \end{frame}
 
@@ -142,19 +142,19 @@
 	Binary Pythagorean triple problem with $n$ numbers \\
 	\vspace{5px}
 	\pause
-	Set of variables $V = \{ p_k \quad | \quad 1 \leq k \leq n \}$ \\
+	Set of variables $V = \{ p_k \mid 1 \leq k \leq n \}$ \\
 	\vspace{5px}
 	\pause
 	Constraint for non-equality: $NotEqual(x,y,z) = (x \vee y \vee z) \wedge (\neg x \vee \neg y \vee \neg z) $ \\
 	\vspace{5px}
 	\pause
-	Constraint for all Pythagorean triples: $F = \bigwedge\limits_{\small\substack{1 \leq x,y,z \leq n \\ x^2+y^2=z^2}} NotEqual(p_x,p_y,p_z)$ \\
+	Constraint for all Pythagorean triples: $F = \bigwedge\limits_{x^2+y^2=z^2} NotEqual(p_x,p_y,p_z)$ \\
 	\vspace{10px}
 	\pause
 	For an interpretation $I \subseteq V$ with $I \models F$, the resulting partition is:
 	\begin{itemize}
-		\item $ P_1 = \{ x \quad | \quad p_x \in I \}$
-		\item $ P_2 = \{ x \quad | \quad p_x \notin I \} $
+		\item $ P_1 = \{ x \mid p_x \in I \}$
+		\item $ P_2 = \{ x \mid p_x \notin I \} $
 	\end{itemize}
 \end{frame}
 
@@ -165,10 +165,10 @@
 	$V = \{ p_1, p_2, \dots ,p_{15} \}$
 	\pause
 	\begin{flalign*}
-		F \quad = & \quad \quad (p_3 \vee p_4 \vee p_5) \wedge (\neg p_3 \vee \neg p_4 \vee \neg p_5) &\\
-		& \wedge \quad (p_6 \vee p_8 \vee p_{10}) \wedge (\neg p_6 \vee \neg p_8 \vee \neg p_{10}) &\\
-		& \wedge \quad (p_9 \vee p_{12} \vee p_{15}) \wedge (\neg p_9 \vee \neg p_{12} \vee \neg p_{15}) &\\
-		& \wedge \quad (p_5 \vee p_{12} \vee p_{13}) \wedge (\neg p_5 \vee \neg p_{12} \vee \neg p_{13}) &
+		F \quad = & \quad \quad (p_3 \vee p_4 \vee {\color<4->{ForestGreen}p_5}) \wedge ({\color<4->{ForestGreen}\neg p_3} \vee \neg p_4 \vee \neg p_5) &\\
+		& \wedge \quad (p_6 \vee p_8 \vee {\color<4->{ForestGreen}p_{10}}) \wedge ({\color<4->{ForestGreen}\neg p_6} \vee \neg p_8 \vee \neg p_{10}) &\\
+		& \wedge \quad (p_9 \vee p_{12} \vee {\color<4->{ForestGreen}p_{15}}) \wedge ({\color<4->{ForestGreen}\neg p_9} \vee \neg p_{12} \vee \neg p_{15}) &\\
+		& \wedge \quad (p_5 \vee p_{12} \vee {\color<4->{ForestGreen}p_{13}}) \wedge (\neg p_5 \vee {\color<4->{ForestGreen}\neg p_{12}} \vee \neg p_{13}) &
 	\end{flalign*}
 	
 	\pause
@@ -197,7 +197,7 @@
 	\pause
 	Approaches:
 	\begin{itemize}
-		\item eliminate clauses with variables only occuring once
+		\item eliminate some particular clauses
 		\pause
 		\item break partition symmetry
 	\end{itemize}
@@ -216,45 +216,48 @@
 	\begin{itemize}
 		\item if $p_4^I \neq p_5^I$ then $NotEqual(p_3,p_4,p_5)$ is satisfied
 		\pause
-		\item if $p_4^I = p_5^I = \top$ then choose $p_3^I = \bot$
+		\item if $p_4^I = p_5^I = \top$ then $p_3^I = \bot$
 		\pause
-		\item if $p_4^I = p_5^I = \bot$ then choose $p_3^I = \top$
+		\item if $p_4^I = p_5^I = \bot$ then $p_3^I = \top$
 	\end{itemize}
 	\vspace{5px}
 	\pause
 	$\rightarrow$ clause $NotEqual(p_3,p_4,p_5)$ will not cause conflict
 	\vspace{5px}
 	\pause
+	\begin{itemize}
+		\item remove $NotEqual(p_3,p_4,p_5)$ from $F$ to obtain $F'$
+		\pause
+		\item interpretation of $p_3$ is important but not represented in $F'$
+		\pause
+		\item $\rightarrow$ remember deleted clauses and modify interpretation of $F'$ accordingly
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Clause elimination - Example}
 	\begin{flalign*}
 		F' \quad = & \quad \quad NotEqual(p_6,p_9,p_{12}) &\\
 		& \wedge \quad NotEqual(p_9,p_{12},p_{15}) &\\
 		& \wedge \quad NotEqual(p_5,p_{12},p_{13}) &
 	\end{flalign*}
-\end{frame}
-
-\begin{frame}{Clause elimination}
-	Notes:
-	\begin{itemize}
-		\item $F'$ might have more models than $F$
-		\pause
-		\item choice for variables occurring only once in $F$ is important but not represented in $F'$
-		\pause
-		\item $\rightarrow$ remember deleted clauses and modify interpretation of $F'$ accordingly
-	\end{itemize}
-	
 	\vspace{5px}
 	\pause
-	Example:
-
-	\begin{itemize}
-		\item deleted clause $NotEqual(p_3,p_4,p_5)$ because $p_3$ only occurred once
-		\pause
-		\item $I' \models F'$ and $\{p_3,p_4,p_5\} \subseteq I'$
-		\pause
-		\item $I = I' \setminus {p_3}$
-		\item while $I' \not\models F$, we have $I \models F$
-	\end{itemize}
+	Possible Interpretation $I = \{p_6, p_{12}\}$ \\
+	\vspace{5px}
+	\pause
+	$I \models F'$ but $I \not\models F$ \\
+	\vspace{5px}
+	$\rightarrow$ account for deleted constraint $NotEqual(p_3,p_4,p_5)$ \\
+	\vspace{5px}
+	\pause
+	As $p_4^I = p_5^I = \bot$ we modify $p_3^I = \top$ \\
+	\vspace{5px}
+	\pause
+	$I' = \{p_3, p_6, p_{12}\}$ \\
+	\vspace{5px}
+	$I' \models F$
 \end{frame}
+
 
 \begin{frame}{Breaking Symmetry}
 	\begin{itemize}
@@ -262,7 +265,7 @@
 		\pause
 		\item if $I \models F'$ then $V \setminus I \models F'$
 		\pause
-		\item $\rightarrow$ introduce unit clause for variable occurring in $F'$
+		\item $\rightarrow$ introduce unit clause for variable $p_x$ occurring in $F'$
 		\item $F'' = F' \wedge p_x$
 	\end{itemize}
 	\vspace{5px}
