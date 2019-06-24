@@ -79,23 +79,35 @@
 
 
 % title frame
+%Aldo's part
+  
 \begin{frame}
-	\centering
-	{\bf \centering \Large \textcolor{OrangeRed1}{\Mytitle}}\\
-	\vspace{20pt}
-	
-	{\bf {\normalsize \textcolor{mdwblue}{\Myauthor}}\\
-	\vspace{5pt}
-	
-	{\small \textcolor{mdwblue}{Technische Universit\"{a}t Dresden}}\\
-	\vspace{20pt}
-	
-	{ \textcolor{mdwblue}{26th June 2019}}}
+\customtitle
+	\begin{list2}
+		\item Introduction
+		\item History of the problem
+		\item The framework
+		\item Encoding
+		\item Transformation
+		\item Splitting 
+		\item Validation for each step 
+	\end{list2}
 \end{frame}
 
 
-% Aldo's part
+
+
 \section{Introduction}
+
+\begin{frame}{Introduction}
+	\begin{itemize}
+		\item The boolean Pythagorean Triples problem has been a longstanding open problem in Ramsey Theory\pause
+		\item Can the set ${\mathbb N}$ = ${\{}$1, 2, 3, ${\dots\}}$ be divided in two parts such that no part contains a triple (a, b, c) with ${a^2 + b^2 = c^2 }$
+	\end{itemize}
+\end{frame}
+
+
+\section{Example}
 \begin{frame}{Example}
 
 	% this is just an idea for an example
@@ -117,7 +129,22 @@
 	
 \end{frame}
 
-\section{Quick history of the problem}
+\section{Introduction}
+
+\begin{frame}{}
+	\begin{itemize}
+		\item The set  $ \{1, \ldots, 7824\}  $ can be partitioned into two parts, while this is impossible for $ \{1, \ldots, 7825\}  $
+		\pause
+		\item We prove this  theorem by considering two SAT problems: \pause
+		\begin{enumerate}
+			\item showing that $ \{1, \ldots, 7824\}  $  can be partitioned in two different parts. \pause
+			\item showing  that any partition of $ \{1, \ldots, 7825\}  $ contains a  Pythagorean triple.
+		\end{enumerate}
+
+	\end{itemize}
+\end{frame}
+
+
 
 
 % Patrick's part
