@@ -85,8 +85,7 @@
 \customtitle
 	\begin{list2}
 		\item Introduction
-		\item History of the problem
-		\item The framework
+		\item Framework
 		\item Encoding
 		\item Transformation
 		\item Heuristic solving
@@ -220,7 +219,7 @@
 
 \section{Transformation}
 
-\begin{frame}{Transformatio}
+\begin{frame}{Transformation}
 	\begin{figure}
 		\includegraphics[scale=0.65]{images/framework2}
 	\end{figure}
@@ -247,10 +246,10 @@
 
 \begin{frame}{Clause elimination}
 	\begin{flalign*}
-		F \quad = & \quad \quad NotEqual(p_3,p_4,p_5) &\\
-		& \wedge \quad NotEqual(p_6,p_9,p_{12}) &\\
-		& \wedge \quad NotEqual(p_9,p_{12},p_{15}) &\\
-		& \wedge \quad NotEqual(p_5,p_{12},p_{13}) &
+		F \quad = & \quad NotEqual(p_3,p_4,p_5) &\\
+		\wedge & \quad NotEqual(p_6,p_9,p_{12}) &\\
+		\wedge & \quad NotEqual(p_9,p_{12},p_{15}) &\\
+		\wedge & \quad NotEqual(p_5,p_{12},p_{13}) &
 	\end{flalign*}
 	Note $p_3$ only occurs in $NotEqual(p_3,p_4,p_5)$ and thus does not affect any other clauses
 	\vspace{5px}
@@ -278,13 +277,14 @@
 
 \begin{frame}{Clause elimination - Example}
 	\begin{flalign*}
-		F' \quad = & \quad \quad NotEqual(p_6,p_9,p_{12}) &\\
-		& \wedge \quad NotEqual(p_9,p_{12},p_{15}) &\\
-		& \wedge \quad NotEqual(p_5,p_{12},p_{13}) &
+		F' \quad = & \quad NotEqual(p_6,p_9,p_{12}) &\\
+		\wedge & \quad NotEqual(p_9,p_{12},p_{15}) &\\
+		\wedge & \quad NotEqual(p_5,p_{12},p_{13}) & \\
+		F \quad = & \quad F' \wedge NotEqual(p_3,p_4,p_5) &
 	\end{flalign*}
 	\vspace{5px}
 	\pause
-	Possible Interpretation $I = \{p_6, p_{12}\}$ \\
+	Possible Interpretation: $I = \{p_6, p_{12}\}$ \\
 	\vspace{5px}
 	\pause
 	$I \models F'$ but $I \not\models F$ \\
